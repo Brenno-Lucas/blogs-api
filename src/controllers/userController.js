@@ -18,11 +18,11 @@ const login = async (req, res) => {
   }
   try {
     const { email, password } = body;
-    const result = await userService.getAll(email);
+    const result = await userService.getByEmail(email);
     if (!result || result.password !== password) {
       return res.status(400).json({ message: 'Invalid fields' });
     }
-    const token = jwt.sign({ data: { user: result.id } }, JWT_SECRET, {
+    const token = jwt.sign({ data: { user: email } }, JWT_SECRET, {
       expiresIn: 600 });
     return res.status(200).json({ token });
   } catch (error) {
@@ -34,7 +34,7 @@ const createUser = async (req, res) => {
   const { body } = req;
   try {
   const { email } = body;
-  const result = await userService.getAll(email);
+  const result = await userService.getByEmail(email);
   if (result) return res.status(409).json({ message: 'User already registered', result });
   const token = jwt.sign({ data: { user: email } }, JWT_SECRET, {
     expiresIn: 600,
@@ -47,7 +47,17 @@ const createUser = async (req, res) => {
   }
 };
 
+const getAll = async (req, res) => {
+  try {
+    const response = await userService.getAll();
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   login,
   createUser,
+  getAll,
 };
