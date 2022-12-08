@@ -49,8 +49,16 @@ const createUser = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const response = await userService.getAll();
-    return res.status(200).json(response);
+    const result = await userService.getAll();
+    return res.status(200).json(result);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+const getById = async (req, res) => {
+  try {
+    return res.status(200).json(req.response);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -60,4 +68,5 @@ module.exports = {
   login,
   createUser,
   getAll,
+  getById,
 };
