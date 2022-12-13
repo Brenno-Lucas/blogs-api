@@ -20,6 +20,7 @@ app.post('/categories', validToken, validateCategory.validateCategory,
 categoriesController.createCategory);
 app.get('/categories', validToken, categoriesController.getAllCategories);
 app.post('/post', validToken, postMiddleware.validateCreate, postsController.create);
+app.get('/post', validToken, postsController.get);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
