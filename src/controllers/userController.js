@@ -22,7 +22,7 @@ const login = async (req, res) => {
     if (!result || result.password !== password) {
       return res.status(400).json({ message: 'Invalid fields' });
     }
-    const token = jwt.sign({ data: { user: email } }, JWT_SECRET, {
+    const token = jwt.sign({ email }, JWT_SECRET, {
       expiresIn: 600 });
     return res.status(200).json({ token });
   } catch (error) {

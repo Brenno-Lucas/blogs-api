@@ -14,6 +14,7 @@ const getAll = async () => {
 
 const getByEmail = async (email) => {
   const [result] = await User.findAll({ where: { email } });
+  console.log(result);
   return result;
 };
 

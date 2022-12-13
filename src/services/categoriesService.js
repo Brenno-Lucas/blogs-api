@@ -10,7 +10,14 @@ const getAllCategories = async () => {
   return result;
 };
 
+const getByIds = async () => {
+  const data = await Category.findAll({ attributes: ['id'] });
+  const values = data.map((e) => e.dataValues.id);
+  return values;
+};
+
 module.exports = {
   create,
   getAllCategories,
+  getByIds,
 };

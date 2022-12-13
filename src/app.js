@@ -4,6 +4,8 @@ const validateCategory = require('./middlewares/validateCategory');
 const usersController = require('./controllers/userController');
 const userMiddleware = require('./middlewares/userMiddleware');
 const validToken = require('./middlewares/validateToken');
+const postMiddleware = require('./middlewares/postMiddleware');
+const postsController = require('./controllers/postsController');
 
 // ...
 
@@ -17,6 +19,7 @@ app.get('/user/:id', validToken, userMiddleware.validID, usersController.getById
 app.post('/categories', validToken, validateCategory.validateCategory, 
 categoriesController.createCategory);
 app.get('/categories', validToken, categoriesController.getAllCategories);
+app.post('/post', validToken, postMiddleware.validateCreate, postsController.create);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
